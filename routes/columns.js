@@ -3,10 +3,6 @@ var router = express.Router();
 
 var Column = require('../models/column');
 
-router.get('/',function(req,res){
-    res.send("test columns route")
-})
-
 //get column
 router.get('/:_id',function(req,res){
     Column.getColumnById(req.params._id,function(err,column){

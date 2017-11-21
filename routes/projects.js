@@ -3,12 +3,9 @@ var router = express.Router();
 
 var Project = require('../models/project');
 
-router.get('/',function(req,res){
-    res.send("test project route");
-})
 
 // get by id
-router.get('/:_id',function(req,res){
+router.get('/id/:_id',function(req,res){
     Project.getProjectById(req.params._id,function(err,project){
 		if(err) {console.log(err); res.send({code:0,message:err})}
 		else{
@@ -18,7 +15,7 @@ router.get('/:_id',function(req,res){
 });
 
 // get by name
-router.get('/:projectName',function(req,res){
+router.get('/project/:projectName',function(req,res){
     Project.getProjectByName(req.params.projectName,function(err,project){
 		if(err) {console.log(err); res.send({code:0,message:err})}
 		else{
