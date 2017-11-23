@@ -16,7 +16,7 @@ var CardSchema = mongoose.Schema({
         type: Date
     },
     comments: [
-		{commentcomment:{type:String},user_id:{type: mongoose.Schema.Types.ObjectId, ref: 'user'}}
+		{comment:{type:String},user_id:{type: mongoose.Schema.Types.ObjectId, ref: 'user'}}
     ]
 });
 

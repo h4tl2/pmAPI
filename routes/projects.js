@@ -30,6 +30,7 @@ router.post('/createProject',function(req,res){
         projectName : req.body.projectName,
         desc : req.body.desc,
         pic : req.body.pic,
+        sprint : req.body.sprint,
         dueDate: req.body.dueDate,
         client : req.body.client
     });
