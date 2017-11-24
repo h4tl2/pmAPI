@@ -2,8 +2,12 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var User = require('../models/user');
+
+var configAuth = require('../config/auth');
+
 
 // get /
 router.get('/',function(req,res){

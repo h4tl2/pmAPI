@@ -41,7 +41,7 @@ router.post('/createCard',function(req,res){
         if(err) throw err;
         else{
             console.log(card);
-            res.send({code:1,message:"successful create card"});
+            res.send({code:1,message:"successful create card",card:card});
         }
     }) 
 });

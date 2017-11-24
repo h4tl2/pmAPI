@@ -22,10 +22,11 @@
     "mongodb": "*",
     "mongoose": "*",
     "passport": "*",
+    "passport-google-oauth": "^1.0.0",
     "passport-http": "*",
     "passport-local": "*"
   },
-  "engines":{
-    "node":"7.8.0"
+  "engines": {
+    "node": "7.8.0"
   }
 }

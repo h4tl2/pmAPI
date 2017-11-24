@@ -34,7 +34,7 @@ router.post('/createColumn',function(req,res){
             if(err) throw err;
             else{
                 console.log(column);
-                res.send({code:1,message:"successful create column"});
+                res.send({code:1,message:"successful create column",column:column});
             }
         }) 
 });
