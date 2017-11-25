@@ -71,8 +71,19 @@ router.post('/register',function(req,res){
 				User.createUser(newUser, function(err, user){
 					if(err) throw err;
 					console.log(user);
+					var usertemp = {
+						_id:user._id,
+						username:user.username,
+						name:user.name,
+						email:user.email,
+						projects:user.projects,
+						pic:user.pic,
+						phone:user.phone,
+						role:user.role
+					}
+					res.send({code : 1,message:"register success",user:usertemp});
 				});
-				res.send({code : 1,message:"register success"});
+				
 				
 			}else{
 				res.send({code:0,message:"user already existed!"})
