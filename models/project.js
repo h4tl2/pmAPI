@@ -20,9 +20,11 @@ var ProjectSchema = mongoose.Schema({
         type: Date
     },
     client:{
+        client_name:{
+            type: String
+        },
         client_email:{
             type: String
-    
         },
         client_phone:{
             type: String

@@ -10,6 +10,9 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+// var multer = require('multer');
+// var formidable = require('express-formidable');
+var fileUpload = require('express-fileupload');
 var configdb = require('./config/dbconnect');
 // create connection
 mongoose.connect(configdb.mongoUri,function(error){
@@ -27,6 +30,8 @@ var projects = require('./routes/projects');
 // Init App
 var app = express();
 
+
+// var upload = multer();
 // // View Engine
 // app.set('views', path.join(__dirname, 'views'));
 // app.engine('handlebars', exphbs({defaultLayout:'layout'}));
@@ -46,6 +51,15 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
+
+// multer config
+// app.use(upload.array());
+
+// formidable
+//app.use(formidable());
+
+// fileupload
+app.use(fileUpload());
 
 // Passport init
 app.use(passport.initialize());

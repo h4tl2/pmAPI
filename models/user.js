@@ -64,6 +64,17 @@ module.exports.getUserByEmail = function(email, callback){
 	User.findOne(query, callback);
 }
 
+// // get AllUser by credential for seach
+module.exports.getAllUser = function(query, callback){
+	var regexValue = '/^'+query+'/i';
+	User.find({ $or: [ { email: { $regex: regexValue } }, { username: { $regex: regexValue } },{name: { $regex: regexValue }}]}, callback);
+}
+
+// get AllUser for seach (NOT GOOD)
+module.exports.getAllUserNG = function(callback){
+	User.collection.find({},callback);
+}
+
 // get user by queryjson
 module.exports.getUserByJson = function(query, callback){
 	User.findOne(query, callback);
@@ -74,6 +85,9 @@ module.exports.updateUserById = function(id, userAtt ,callback){
 	var query = { _id: id };
     User.findOneAndUpdate(query, userAtt, callback)
 };
+
+
+
 // modify user by all 
 module.exports.updateUserByAll = function(user, userAtt ,callback){
     User.findOneAndUpdate(user, userAtt, callback)
@@ -98,3 +112,11 @@ module.exports.pullProjectInUser = function(user_id,project_id,callback){
     //Column.findOneAndUpdate(query,)
     User.update(query, { $pull: { projects: project_id } }, callback)
 };
+
+// // upload pic
+// module.exports.uploadpic = function(user_id,project_id,callback){
+//     var query = {_id:user_id};
+//     //Column.findOneAndUpdate(query,)
+// 	User.update(query, { $pull: { projects: project_id } }, callback)
+// 	User.findOneAndUpdate(user, userAtt, callback)
+// };

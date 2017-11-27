@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
+var mongoose = require('mongoose');
 var User = require('../models/user');
 
 var configAuth = require('../config/auth');
@@ -158,7 +158,10 @@ router.get('/logout', function(req, res){
 });
 
 // get by id
-router.get('/:_id',function(req,res){
+router.get('/id/:_id',function(req,res,next){
+	if(!mongoose.Types.ObjectId.isValid(req.parmas._id)){
+		next();
+	}else{
     User.getUserById(req.params._id,function(err,user){
 		if(err) {console.log(err); res.send({code:0,message:err})}
 		else{
@@ -177,6 +180,7 @@ router.get('/:_id',function(req,res){
 
 		}
 	})
+	}
 });
 
 // get by username
@@ -239,6 +243,49 @@ router.post('/getall',function(req,res){
 	});
 });
 
+// get all user that match criteria
+// router.get('/getuser/:query',function(req,res){
+// 	User.getAllUser(req.params.query,function(err,user){
+// 		if(err) {console.log(err); res.send({code:0,message:err})}
+// 		else{
+// 			res.setHeader('Content-Type', 'application/json');
+// 			console.log(user);
+// 			user.forEach(element => {
+// 				res.write(element);
+// 				console.log(element);
+// 			});
+// 			rres.end();
+// 		}
+// 	})
+// 	User.getAllUserNG(function(err,user){
+// 		res.send(user);
+// 	})
+// })
+
+
+//degrade of the above code
+router.get('/getAllUser',function(req,res){
+	// var query = ""
+	// User.getAllUserNG(function(err,user){
+	// 	if(err) {console.log(err)}
+	// 	//console.log(user);
+	// 	// var userMap = {};
+	// 	// user.forEach(function(user){
+	// 	// 	userMap[user._id]=user;
+	// 	// })
+	// 	// res.send(userMap);
+	// })
+	User.find({},function(err,user){
+		if(err) console.log(err);
+		else{
+			user.forEach(element => {
+				element.password = ""
+			})
+			res.json(user);
+		}
+	})
+})
+
 // put to modify user
 router.post('/updateUser',function(req,res){
 	userAtt = req.body;
@@ -294,6 +341,24 @@ router.post('/pullProject',function(req,res){
 		}
     })
 })
+
+router.post('/uploadPic',function(req,res){
+	
+	//console.log(req.body);
+	//console.log(req.files.pic.data);
+	var user_id = req.body.user_id;
+	var img_json = {
+		pic:req.files.pic.data
+	};
+	User.updateUserById(user_id,img_json,function(err){
+		if(err){console.log(err); res.send({code:0,message:err})}
+		else{
+			res.send({code:1,message:"upload success"})
+		}
+	})
+
+})
+
 
 module.exports = router;
 
